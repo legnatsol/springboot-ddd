@@ -1,0 +1,55 @@
+plugins {
+    id 'java-library'
+    id "com.vanniktech.maven.publish" version "0.35.0"
+    id 'signing'
+}
+
+group = 'io.github.legnatsol'
+version = '1.0.0'
+
+mavenPublishing {
+    coordinates(group, rootProject.name, version)
+    pom {
+        name = rootProject.name
+        description = "DDD Library for SpringBoot4.x"
+        url = "https://github.com/legnatsol/springboot-ddd"
+        licenses {
+            license {
+                name = "MIT License"
+                url = "https://opensource.org/license/mit"
+            }
+        }
+        developers {
+            developer {
+                name = "Legnatsol"
+                url = "https://github.com/legnatsol"
+                email = "jonas8848@hotmail.com"
+            }
+        }
+        scm {
+            connection = "scm:git:git://github.com/legnatsol/springboot-ddd.git"
+            developerConnection = "scm:git:ssh://github.com/legnatsol/springboot-ddd.git"
+            url = "https://github.com/legnatsol/springboot-ddd.git"
+        }
+    }
+    publishToMavenCentral()
+    signAllPublications()
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    api 'io.github.legnatsol:response-models:1.0.0'
+
+    // map struct
+    compileOnly "org.mapstruct:mapstruct:1.6.3"
+
+    // spring context
+    compileOnly "org.springframework:spring-context:7.0.1"
+
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
