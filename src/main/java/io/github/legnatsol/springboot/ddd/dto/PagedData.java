@@ -145,6 +145,19 @@ public class PagedData<T> extends DTO {
 
     /**
      * Convert to paged response
+     * @return paged response
+     */
+    public PagedResponse<T> toResponse() {
+        PagedResponse<T> pagedResponse = new PagedResponse<>();
+        pagedResponse.setCurrent(getCurrent());
+        pagedResponse.setPageSize(getPageSize());
+        pagedResponse.setTotal(getTotal());
+        pagedResponse.setData(getData());
+        return pagedResponse;
+    }
+
+    /**
+     * Convert to paged response
      *
      * @param pagedData paged data
      * @param <T>       data type

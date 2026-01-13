@@ -1,5 +1,7 @@
 package io.github.legnatsol.springboot.ddd.event;
 
+import io.github.legnatsol.springboot.ddd.dto.EventObject;
+
 /**
  * Domain Event Publisher
  */
@@ -10,5 +12,5 @@ public interface DomainEventPublisher {
      * @param event domain event
      * @param <T> domain event data
      */
-    <T extends DomainEventData> void publishEvent(DomainEvent<T> event);
+    <T extends EventObject> void publishEvent(DomainEvent<T> event);
 }

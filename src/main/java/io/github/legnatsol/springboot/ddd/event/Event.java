@@ -1,12 +1,14 @@
 package io.github.legnatsol.springboot.ddd.event;
 
+import io.github.legnatsol.springboot.ddd.dto.EventObject;
+
 import java.io.Serializable;
 
 /**
  * Event
  * @param <T> Event Data
  */
-public class Event<T extends DomainEventData> implements Serializable {
+public class Event<T extends EventObject> implements Serializable {
     /**
      * Event ID
      */

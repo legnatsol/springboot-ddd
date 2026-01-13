@@ -1,5 +1,6 @@
 package io.github.legnatsol.springboot.ddd.event;
 
+import io.github.legnatsol.springboot.ddd.dto.EventObject;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.ResolvableTypeProvider;
 
@@ -10,7 +11,7 @@ import java.util.UUID;
  * Domain Event
  * @param <T> Domain Event Data
  */
-public class DomainEvent<T extends DomainEventData> extends Event<T> implements ResolvableTypeProvider, Serializable {
+public class DomainEvent<T extends EventObject> extends Event<T> implements ResolvableTypeProvider, Serializable {
     private DomainEvent(String type, T data) {
         super(UUID.randomUUID().toString(), type, data, System.currentTimeMillis());
     }
@@ -37,7 +38,7 @@ public class DomainEvent<T extends DomainEventData> extends Event<T> implements 
          * @param <T> event data type
          * @return domain event
          */
-        public <T extends DomainEventData> DomainEvent<T> data(T data) {
+        public <T extends EventObject> DomainEvent<T> data(T data) {
             return new DomainEvent<>(type, data);
         }
     }

@@ -1,11 +1,11 @@
 package io.github.legnatsol.springboot.ddd.domain;
 
+import io.github.legnatsol.springboot.ddd.dto.EventObject;
 import io.github.legnatsol.springboot.ddd.event.DomainEvent;
-import io.github.legnatsol.springboot.ddd.event.DomainEventData;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,12 +21,12 @@ public abstract class BaseAggregateRoot<ID extends Identifier<?>> implements Agg
     /**
      * create time
      */
-    protected Date createTime;
+    protected Instant createTime;
 
     /**
      * update time
      */
-    protected Date updateTime;
+    protected Instant updateTime;
 
     /**
      * domain events
@@ -47,7 +47,7 @@ public abstract class BaseAggregateRoot<ID extends Identifier<?>> implements Agg
      * @param event domain event
      * @param <T>   event data type
      */
-    protected <T extends DomainEventData> void emitEvent(DomainEvent<T> event) {
+    protected <T extends EventObject> void emitEvent(DomainEvent<T> event) {
         allEvents().add(event);
     }
 
@@ -79,7 +79,7 @@ public abstract class BaseAggregateRoot<ID extends Identifier<?>> implements Agg
      * append
      */
     protected void append() {
-        Date now = new Date();
+        Instant now = Instant.now();
         saveMode = SaveMode.INSERT;
         createTime = now;
         updateTime = now;
@@ -90,7 +90,7 @@ public abstract class BaseAggregateRoot<ID extends Identifier<?>> implements Agg
      */
     protected void update() {
         saveMode = SaveMode.UPDATE;
-        updateTime = new Date();
+        updateTime = Instant.now();
     }
 
     /**
@@ -98,7 +98,7 @@ public abstract class BaseAggregateRoot<ID extends Identifier<?>> implements Agg
      */
     protected void delete() {
         saveMode = SaveMode.DELETE;
-        updateTime = new Date();
+        updateTime = Instant.now();
     }
 
     /**
@@ -106,7 +106,7 @@ public abstract class BaseAggregateRoot<ID extends Identifier<?>> implements Agg
      *
      * @return create time
      */
-    public Date getCreateTime() {
+    public Instant getCreateTime() {
         return createTime;
     }
 
@@ -115,7 +115,7 @@ public abstract class BaseAggregateRoot<ID extends Identifier<?>> implements Agg
      *
      * @return update time
      */
-    public Date getUpdateTime() {
+    public Instant getUpdateTime() {
         return updateTime;
     }
 
@@ -124,7 +124,7 @@ public abstract class BaseAggregateRoot<ID extends Identifier<?>> implements Agg
      *
      * @param createTime create time
      */
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(Instant createTime) {
         this.createTime = createTime;
     }
 
@@ -133,7 +133,7 @@ public abstract class BaseAggregateRoot<ID extends Identifier<?>> implements Agg
      *
      * @param updateTime update time
      */
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(Instant updateTime) {
         this.updateTime = updateTime;
     }
 

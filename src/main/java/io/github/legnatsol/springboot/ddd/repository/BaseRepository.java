@@ -27,7 +27,7 @@ public abstract class BaseRepository<T extends BaseAggregateRoot<ID>, ID extends
      *
      * @param aggregateRoot Aggregate Root
      */
-    private void publishEvent(T aggregateRoot) {
+    protected void publishEvent(T aggregateRoot) {
         List<DomainEvent<?>> events = aggregateRoot.getEvents();
         if (events != null && !events.isEmpty()) {
             events.forEach(SpringUtils::publishEvent);
@@ -42,7 +42,6 @@ public abstract class BaseRepository<T extends BaseAggregateRoot<ID>, ID extends
 
     @Override
     public void save(T aggregate) {
-        publishEvent(aggregate);
         if (SaveMode.INSERT == aggregate.getSaveMode()) {
             this.saveForInsert(aggregate);
         } else if (SaveMode.UPDATE == aggregate.getSaveMode()) {
@@ -50,6 +49,7 @@ public abstract class BaseRepository<T extends BaseAggregateRoot<ID>, ID extends
         } else if (SaveMode.DELETE == aggregate.getSaveMode()) {
             this.saveForDelete(aggregate);
         }
+        publishEvent(aggregate);
     }
 
     /**
